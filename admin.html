@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Panel - Employee Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+
+    <div class="logo">
+        Employee Management System
+    </div>
+
+    <div class="nav-links">
+
+        <a href="index.html">
+            Dashboard
+        </a>
+
+        <a href="reports.html">
+            Reports
+        </a>
+
+        <a href="admin.html" class="active">
+            Admin
+        </a>
+
+    </div>
+
+</nav>
+
+
+    <!-- Admin Panel -->
+
+    <main class="admin-container">
+
+        <h1>Admin Panel</h1>
+
+        <p class="admin-subtitle">
+            Manage your administrator account and system.
+        </p>
+
+
+        <div class="admin-grid">
+
+
+            <!-- Admin Profile -->
+
+            <div class="admin-card">
+
+                <div class="admin-icon">
+                    👤
+                </div>
+
+                <h2>Admin Profile</h2>
+
+                <p>
+                    Manage your administrator information.
+                </p>
+
+                <div class="admin-info">
+
+                    <div>
+                        <strong>Username</strong>
+                        <span>admin</span>
+                    </div>
+
+                    <div>
+                        <strong>Role</strong>
+                        <span>Administrator</span>
+                    </div>
+
+                    <div>
+                        <strong>Status</strong>
+                        <span class="status">Active</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Change Password -->
+
+            <div class="admin-card">
+
+                <div class="admin-icon">
+                    🔐
+                </div>
+
+                <h2>Change Password</h2>
+
+                <p>
+                    Update your administrator password.
+                </p>
+
+                <form action="/change-password" method="POST">
+
+    <input
+        type="password"
+        name="currentPassword"
+        placeholder="Current Password"
+        required
+    >
+
+    <input
+        type="password"
+        name="newPassword"
+        placeholder="New Password"
+        required
+    >
+
+    <input
+        type="password"
+        name="confirmPassword"
+        placeholder="Confirm New Password"
+        required
+    >
+
+    <button type="submit" class="admin-button">
+        Change Password
+    </button>
+
+
+            </div>
+
+
+            <!-- System Information -->
+
+            <div class="admin-card">
+
+                <div class="admin-icon">
+                    ⚙️
+                </div>
+
+                <h2>System Information</h2>
+
+                <p>
+                    Information about the Employee Management System.
+                </p>
+
+                <div class="admin-info">
+
+                    <div>
+                        <strong>System</strong>
+                        <span>Employee Management System</span>
+                    </div>
+
+                    <div>
+                        <strong>Backend</strong>
+                        <span>Node.js</span>
+                    </div>
+
+                    <div>
+                        <strong>Database</strong>
+                        <span>MySQL</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Logout -->
+
+            <div class="admin-card logout-card">
+
+                <div class="admin-icon">
+                    🚪
+                </div>
+
+                <h2>Logout</h2>
+
+                <p>
+                    Sign out from the administrator account.
+                </p>
+
+                <button
+                    class="logout-button"
+                    onclick="logout()">
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+    function logout() {
+
+        const confirmLogout =
+            confirm("Are you sure you want to logout?");
+
+        if (confirmLogout) {
+
+            window.location.href = "login.html";
+
+        }
+
+    }
+
+</script>
+</body>
+
+</html>

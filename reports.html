@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reports - Employee Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Employee Management System
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html">Dashboard</a>
+
+            <a href="reports.html" class="active">Reports</a>
+
+            <a href="admin.html">Admin</a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Reports -->
+
+    <main class="reports-container">
+
+        <h1>Employee Reports</h1>
+
+        <p class="reports-subtitle">
+            View employee and salary information.
+        </p>
+
+
+        <!-- Summary Cards -->
+
+        <div class="report-cards">
+
+            <div class="report-card">
+                <h3>Total Employees</h3>
+                <h2 id="totalEmployees">0</h2>
+            </div>
+
+            <div class="report-card">
+                <h3>Departments</h3>
+                <h2 id="totalDepartments">0</h2>
+            </div>
+
+            <div class="report-card">
+                <h3>Average Salary</h3>
+                <h2 id="averageSalary">₹0</h2>
+            </div>
+
+            <div class="report-card">
+                <h3>Highest Salary</h3>
+                <h2 id="highestSalary">₹0</h2>
+            </div>
+
+        </div>
+
+
+        <!-- Department Report -->
+
+        <div class="report-section">
+
+            <h2>Department Report</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Department</th>
+                        <th>Employees</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="departmentTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Employee Report -->
+
+        <div class="report-section">
+
+            <h2>Employee Report</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Position</th>
+                        <th>Salary</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="reportEmployeeTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Print -->
+
+        <button class="print-button" onclick="window.print()">
+            🖨 Print Report
+        </button>
+
+    </main>
+
+
+    <script>
+
+        async function loadReports() {
+
+            const response = await fetch("/employees");
+
+            const employees = await response.json();
+
+
+            // Summary
+
+            document.getElementById("totalEmployees").textContent =
+                employees.length;
+
+
+            const departments =
+                [...new Set(employees.map(e => e.department))];
+
+            document.getElementById("totalDepartments").textContent =
+                departments.length;
+
+
+            const salaries =
+                employees.map(e => Number(e.salary));
+
+
+            const average =
+                salaries.length
+                    ? salaries.reduce((a, b) => a + b, 0) / salaries.length
+                    : 0;
+
+
+            const highest =
+                salaries.length
+                    ? Math.max(...salaries)
+                    : 0;
+
+
+            document.getElementById("averageSalary").textContent =
+                "₹" + average.toFixed(2);
+
+
+            document.getElementById("highestSalary").textContent =
+                "₹" + highest.toFixed(2);
+
+
+            // Department report
+
+            const departmentTable =
+                document.getElementById("departmentTable");
+
+            departmentTable.innerHTML = "";
+
+
+            departments.forEach(department => {
+
+                const count =
+                    employees.filter(
+                        e => e.department === department
+                    ).length;
+
+
+                departmentTable.innerHTML += `
+                    <tr>
+                        <td>${department}</td>
+                        <td>${count}</td>
+                    </tr>
+                `;
+
+            });
+
+
+            // Employee report
+
+            const employeeTable =
+                document.getElementById("reportEmployeeTable");
+
+            employeeTable.innerHTML = "";
+
+
+            employees.forEach(employee => {
+
+                employeeTable.innerHTML += `
+                    <tr>
+
+                        <td>${employee.employee_id}</td>
+
+                        <td>${employee.name}</td>
+
+                        <td>${employee.department}</td>
+
+                        <td>${employee.position}</td>
+
+                        <td>₹${Number(employee.salary).toFixed(2)}</td>
+
+                    </tr>
+                `;
+
+            });
+
+        }
+
+
+        loadReports();
+
+    </script>
+
+</body>
+
+</html>
